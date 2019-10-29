@@ -41,11 +41,23 @@ namespace BankApp2019
                     case "2":
                         PrintAllAccounts();
                         Console.Write("Account Number: ");
-                        var amount = Console.ReadLine();
+                        var accountNumber = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Amount to deposit: ");
+                        var amount = Convert.ToDecimal(Console.ReadLine());
+                        Bank.Deposit(accountNumber, amount);
+                        Console.WriteLine("Deposit completed successfully!");
+
 
                         break;
                     case "3":
                         PrintAllAccounts();
+                        Console.Write("Account Number: ");
+                        accountNumber = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Amount to withdraw: ");
+                        amount = Convert.ToDecimal(Console.ReadLine());
+                        Bank.Withdraw(accountNumber, amount);
+                        Console.WriteLine("Withdrawl completed successfully!");
+
                         break;
                     case "4":
                         PrintAllAccounts();
