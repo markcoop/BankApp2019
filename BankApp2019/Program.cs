@@ -6,7 +6,7 @@ namespace BankApp2019
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("********** Welcome the Bank **********");
+            Console.WriteLine("********** Welcome to the Bank **********");
 
             while (true)
             {
@@ -24,19 +24,35 @@ namespace BankApp2019
                         Console.WriteLine("Thank you for visiting the Bank.");
                         return;
                     case "1":
-                        Console.Write("Enter your Email Address: ");
-                        var email = Console.ReadLine();
-                        Console.Write("Enter the desired account name: ");
-                        var accountName = Console.ReadLine();
-                        Console.WriteLine("Account Type: ");
-                        var accountTypes = Enum.GetNames(typeof(TypeOfAccount));
-                        for (var i = 0; i < accountTypes.Length; i++)
+                        try
                         {
-                            Console.WriteLine($"{i}. {accountTypes[i]}");
+                            Console.Write("Enter your Email Address: ");
+                            var email = Console.ReadLine();
+                            Console.Write("Enter the desired account name: ");
+                            var accountName = Console.ReadLine();
+                            Console.WriteLine("Account Type: ");
+                            var accountTypes = Enum.GetNames(typeof(TypeOfAccount));
+                            for (var i = 0; i < accountTypes.Length; i++)
+                            {
+                                Console.WriteLine($"{i}. {accountTypes[i]}");
+                            }
+                            var accountType = Enum.Parse<TypeOfAccount>(Console.ReadLine());
+                            var account = Bank.CreateAccount(accountName, email, accountType);
+                            Console.WriteLine($"Account Number: {account.AccountNumber}, Account Name: {account.AccountName}, Email: {account.EmailAddress}, Account type: {account.AccountType}, Account Balance: {account.Balance:C}, Created Date: {account.CreatedDate}");
                         }
-                        var accountType = Enum.Parse<TypeOfAccount>(Console.ReadLine());
-                        var account = Bank.CreateAccount(accountName, email, accountType);
-                        Console.WriteLine($"Account Number: {account.AccountNumber}, Account Name: {account.AccountName}, Email: {account.EmailAddress}, Account type: {account.AccountType}, Account Balance: {account.Balance:C}, Created Date: {account.CreatedDate}");
+                        catch (ArgumentNullException ax)
+                        {
+                            Console.WriteLine($"Error! {ax.Message}");
+                        }
+
+                        catch (ArgumentException)
+                        {
+                            Console.WriteLine("Account type is invalid! Please choose a valid account type.");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Sorry, something went wrong... Please try again.");
+                        }
                         break;
                     case "2":
                         PrintAllAccounts();
