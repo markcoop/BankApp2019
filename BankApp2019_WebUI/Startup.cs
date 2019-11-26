@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using BankApp2019_WebUI.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BankApp2019;
 
 namespace BankApp2019_WebUI
 {
@@ -35,6 +36,9 @@ namespace BankApp2019_WebUI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<BankContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
